@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../providers/auth.service';
 import { DatabaseService } from '../providers/database.service';
+import {FirebaseListObservable, FirebaseObjectObservable} from 'angularfire2/database';
+import { Item } from '../model/item';
 
 
 @Component({
@@ -12,18 +14,11 @@ import { DatabaseService } from '../providers/database.service';
 
 export class MembersComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router, private dbService: DatabaseService) {
-    console.log("Nacho");
-    console.log(dbService.getItems());
-    console.log("Miralles");
+
+  constructor(private dbService: DatabaseService) {
   }
 
   ngOnInit() {
-  }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['login']);
   }
 
 }

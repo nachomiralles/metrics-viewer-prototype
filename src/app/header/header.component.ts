@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
   private user_email: String;
 
   constructor(public authService: AuthService) {
+
     this.authService.af.authState.subscribe(
       (auth) => {
         if (auth == null) {
@@ -19,7 +20,6 @@ export class HeaderComponent implements OnInit {
           this.user_displayName = '';
           this.user_email = '';
         } else {
-          console.log(auth);
           this.isLoggedIn = true;
           this.user_displayName = auth.displayName;
           this.user_email = auth.email;

@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFireDatabase, FirebaseListObservable  } from 'angularfire2/database';
-
-import * as firebase from 'firebase/app';
+import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
 
 @Injectable()
 export class DatabaseService {
-  items: FirebaseListObservable<any>;
-  constructor(public afDB: AngularFireDatabase) { }
 
-  getItems(){
-    return this.items;
+  item: FirebaseObjectObservable<any>;
+  allowedEmails: string;
+
+  constructor(public afDB: AngularFireDatabase) {
+    this.item = this.afDB.object('/mails', { preserveSnapshot: true });
+    this.item.subscribe(snapshot => {
+      this.allowedEmails = snapshot.val();
+    });
   }
 
+  getEmails(): string {
+    return this.allowedEmails;
+  }
 }
