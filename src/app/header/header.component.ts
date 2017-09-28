@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../providers/auth.service';
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-header',
@@ -8,24 +9,56 @@ import { AuthService } from '../providers/auth.service';
 })
 export class HeaderComponent implements OnInit {
   public isLoggedIn: Boolean;
-  private user_displayName: String;
-  private user_email: String;
+  public name: String;
+  public email: String;
 
   constructor(public authService: AuthService) {
 
-    this.authService.af.authState.subscribe(
-      (auth) => {
-        if (auth == null) {
+    this.authService.subject.subscribe(
+      (user) => {
+        if (user == null || !user.allowed) {
           this.isLoggedIn = false;
-          this.user_displayName = '';
-          this.user_email = '';
+          this.name = '';
+          this.email = '';
         } else {
           this.isLoggedIn = true;
-          this.user_displayName = auth.displayName;
-          this.user_email = auth.email;
+          this.name = user.name;
+          this.email = user.email;
         }
-      }
-    );
+      });
+
+
+    // this.authService.af.authState.subscribe(
+    //   (auth) => {
+    //     if (auth == null) {
+    //       this.isLoggedIn = false;
+    //       this.user_displayName = '';
+    //       this.user_email = '';
+    //     } else {
+    //       this.isLoggedIn = true;
+    //       this.user_displayName = auth.displayName;
+    //       this.user_email = auth.email;
+    //     }
+    //   }
+    // );
+
+
+    // this.authService.af.authState.subscribe(
+    //   (auth) => {
+    //     if (auth != null) {
+    //       const emailsArray = this.dbService.getEmails().split(',');
+    //       if (emailsArray.includes(auth.email)) {
+    //         this.notAllowed = false;
+    //         this.router.navigate(['']);
+    //       } else {
+    //         this.notAllowed = true;
+    //         this.authService.logout();
+    //       }
+    //     }
+    //   });
+
+
+
   }
 
   login() {

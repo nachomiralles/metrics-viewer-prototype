@@ -9,31 +9,17 @@ import { AuthService } from './providers/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // private isLoggedIn: Boolean;
-  // private user_displayName: String;
-  // private user_email: String;
 
   constructor(public authService: AuthService, private router: Router) {
 
-    this.authService.af.authState.subscribe(
-      (auth) => {
-        if (auth == null) {
-          // console.log('Logged out');
-          // this.isLoggedIn = false;
-          // this.user_displayName = '';
-          // this.user_email = '';
+    this.authService.subject.subscribe(
+      (user) => {
+        if (user == null || !user.allowed) {
           this.router.navigate(['login']);
-        }
-        else {
-          // this.isLoggedIn = true;
-          // this.user_displayName = auth.displayName;
-          // this.user_email = auth.email;
-          // console.log('Logged in');
-          // console.log(auth);
+        } else {
           this.router.navigate(['']);
         }
-      }
-    );
+      });
   }
 
 
