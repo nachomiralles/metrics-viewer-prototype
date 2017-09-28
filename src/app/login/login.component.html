@@ -4,7 +4,10 @@
       <h1>Bienvenido al Visor de Métricas</h1>
       <p>Accede con tu cuenta de google para continuar.</p>
       <p><button class="btn btn-default" (click)="login()">Acceder</button></p>
-      <div *ngIf="notAllowed"><p class="text-warning">Este usuario no tiene permisos para acceder.</p></div>
+      <div *ngIf="notAllowed">
+        <p class="text-warning">Este usuario no tiene permisos para acceder.
+        <button class="btn btn-default" (click)="lougOutFromGoogle()">Salir de Google</button>
+        </p></div>
     </div>
   </div>
 </div>

@@ -3,7 +3,14 @@
     <div class="jumbotron">
       <h1>Bienvenido</h1>
       <p>Has accedido al visor de métricas:</p>
+      <p><button class="btn btn-default" (click)="viewData()">Ver Datos</button></p>
+      <div *ngIf="loading">loading...</div>
 
+      <li *ngFor="let item of data">
+        {{item.user}}
+        {{item.timeInside}}
+        {{item.timeOutside}}
+      </li>
     </div>
   </div>
 </div>

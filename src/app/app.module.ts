@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HttpModule } from '@angular/http';
+
 
 import { AppComponent } from './app.component';
 import { AuthService } from './providers/auth.service';
@@ -15,6 +17,7 @@ import { MembersComponent } from './members/members.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { DatabaseService } from './providers/database.service';
+import { StorageService } from './providers/storage.service';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyB6U7D4Bb1NlcXXF-H9CMW75BXYhYoeScU',
@@ -42,9 +45,10 @@ const routes: Routes = [
     BrowserModule,
     AngularFireModule.initializeApp(firebaseConfig),
     RouterModule.forRoot(routes),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    HttpModule
   ],
-  providers: [AngularFireAuth, AuthService, DatabaseService],
+  providers: [AngularFireAuth, AuthService, DatabaseService, StorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -17,10 +17,13 @@ export class LoginComponent implements OnInit {
     this.authService.subject.subscribe(
       (user) => {
         if (user == null) {
+          console.log('User null');
           this.notAllowed = false;
         } else if (!user.allowed) {
+          console.log('User not allowed');
           this.notAllowed = true;
         } else {
+          console.log('User bien');
           this.notAllowed = false;
         }
       });
@@ -31,6 +34,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authService.loginWithGoogle();
+  }
+
+  lougOutFromGoogle() {
+    window.open('https://accounts.google.com/Logout', '_blank');
   }
 
 }

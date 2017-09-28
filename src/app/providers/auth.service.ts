@@ -34,6 +34,7 @@ export class AuthService {
       this.subject.next(this._createUser(user, true));
     } else {
       this.subject.next(this._createUser(user, false));
+      // this.logout();
     }
   }
 
@@ -50,6 +51,7 @@ export class AuthService {
   }
 
   logout() {
+    window.open('https://accounts.google.com/Logout', '_blank');
     return this.af.auth.signOut();
   }
 
