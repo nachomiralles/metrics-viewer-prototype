@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { StorageService } from '../providers/storage.service';
+import { MetricsresultComponent } from '../metricsresult/metricsresult.component';
 
 @Component({
   selector: 'app-members',
@@ -9,24 +10,28 @@ import { StorageService } from '../providers/storage.service';
 
 export class MembersComponent implements OnInit {
 
-  data;
+  @ViewChild(MetricsresultComponent) metricsResultComponent: MetricsresultComponent;
+  metricsData;
   loading= false;
 
-  constructor(public storageService: StorageService) {  }
+  constructor(public storageService: StorageService) {
+  }
 
   ngOnInit() {
   }
 
   viewData() {
-    // let storageService: StorageService;
     this.loading = true;
     this.storageService.getData().subscribe(
       (d) => {
         this.loading = false;
-        this.data = d;
-        console.log(this.data);
+        this.metricsData = d;
+        this.metricsResultComponent.prepareData(this.metricsData);
       }
     );
   }
+
+
+
 
 }

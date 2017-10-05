@@ -9,12 +9,15 @@ export class StorageService {
   storage = firebase.storage();
   storageRef = this.storage.ref('demo-data.json');
   public url: string;
+  public urlTest: string;
 
   constructor(private http: Http, public authService: AuthService) {
 
     this.authService.subject.subscribe(
       (user) => {
         if (user != null && user.allowed) {
+          this.urlTest = 'https://metrics-api.geotecuji.org/api/v1/variable-data/app-36437104577c4432/userLocation?application=app-36437104577c4432&session=session1&user=galactus';
+          // this.urlTest = 'https://metrics-api.geotecuji.org/api/v1/metrics-data/app-36437104577c4432/calculateMetrics?application=app-36437104577c4432&session=test_session&user=admin';
           this.storageRef.getDownloadURL().then(
             (url_2) => {
               console.log('URL_2: ' + url_2);
@@ -27,6 +30,7 @@ export class StorageService {
 
   getData() {
     return this.http.get(this.url).map(
+    // return this.http.get(this.urlTest).map(
       (res) => {
         return res.json();
       });
