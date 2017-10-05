@@ -1,3 +1,44 @@
-<p *ngIf="dataReceived">
-  metricsresult works!
-</p>
+<div *ngIf="dataReceived">
+  <div *ngFor= "let user of structuredData">
+      USUARIO: {{ user.user }}
+      DIAS REGISTRADOS: {{ user.diasTotalesRegistrados }}
+    <table class="table table-hover">
+      <tr class="active">
+        <th>Fecha</th>
+        <th>Dsemanafecha</th>
+        <th>Tiempo_registrado</th>
+        <th>Horas_manyana</th>
+        <th>Horas_tarde</th>
+        <th>Horas_noche</th>
+        <th>Tiempo_casa_in</th>
+        <th>Tiempo_casa_out</th>
+        <th>Tiempo_out_manyana</th>
+        <th>Tiempo_out_tarde</th>
+        <th>Tiempo_out_noche</th>
+        <th>num_veces_out</th>
+        <th>num_veces_out_manyana</th>
+        <th>num_veces_out_tarde</th>
+        <th>num_veces_out_noche</th>
+      </tr>
+      <tr *ngFor="let dia of user.informeDiario">
+        <td>{{dia.fecha }}</td>
+        <td>{{dia.diaSemana }}</td>
+        <td>{{dia.tiempoRegistradoTotal }}</td>
+        <td>{{dia.tiempoRegistradoManyana }}</td>
+        <td>{{dia.tiempoRegistradoTarde }}</td>
+        <td>{{dia.tiempoRegistradoNoche }}</td>
+        <td>{{dia.tiempoCasaTotal }}</td>
+        <td>{{dia.tiempoFueraTotal }}</td>
+        <td>{{dia.tiempoFueraManyana }}</td>
+        <td>{{dia.tiempoFueraTarde }}</td>
+        <td>{{dia.tiempoFueraNoche }}</td>
+        <td>{{dia.vecesFueraTotal }}</td>
+        <td>{{dia.vecesFueraManyana }}</td>
+        <td>{{dia.vecesFueraTarde }}</td>
+        <td>{{dia.vecesFueraNoche }}</td>
+      </tr>
+    </table>
+  </div>
+
+
+</div>

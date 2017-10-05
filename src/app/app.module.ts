@@ -18,7 +18,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { DatabaseService } from './providers/database.service';
 import { StorageService } from './providers/storage.service';
-import { MetricsresultComponent } from './metricsresult/metricsresult.component';
+import { MetricsResultComponent } from './metricsresult/metricsresult.component';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyB6U7D4Bb1NlcXXF-H9CMW75BXYhYoeScU',
@@ -41,7 +41,7 @@ const routes: Routes = [
     MembersComponent,
     HeaderComponent,
     FooterComponent,
-    MetricsresultComponent
+    MetricsResultComponent
   ],
   imports: [
     BrowserModule,

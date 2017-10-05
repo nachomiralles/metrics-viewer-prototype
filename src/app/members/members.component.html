@@ -3,38 +3,9 @@
     <div class="jumbotron">
       <h1>Bienvenido</h1>
       <p>Has accedido al visor de métricas:</p>
-      <p><button class="btn btn-default" (click)="viewData()">Ver Datos</button></p>
+      <p><button class="btn btn-default" (click)="viewData()" *ngIf="urlReceived">Ver Datos</button></p>
       <app-metricsresult></app-metricsresult>
-      <!--<app-metricsresult *ngIf="metricsData" [metrics_data]="metricsData"></app-metricsresult>-->
-      <!--<div *ngIf="loading">loading...</div>-->
-      <!--<div *ngIf="data" >-->
 
-        <!--<table class="table table-striped">-->
-          <!--&lt;!&ndash;<tr class="active">&ndash;&gt;-->
-            <!--&lt;!&ndash;<td>USUARIO</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td>DIA</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td>PART</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td>TIEMPO FUERA</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td>TIEMPO DENTRO</td>&ndash;&gt;-->
-          <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-          <!--<tr *ngFor="let item of structuredData">-->
-            <!--<td>{{ item.user }} </td>-->
-            <!--<td>{{ item.diasTotalesRegistrados }} </td>-->
-            <!--&lt;!&ndash;<div *ngFor="let dia of item.informeDiario">&ndash;&gt;-->
-              <!--<td *ngFor="let dia of item.informeDiario">{{ dia.fecha }}</td>-->
-              <!--<td *ngFor="let dia of item.informeDiario">{{ dia.diaSemana }}</td>-->
-              <!--&lt;!&ndash;<td>{{ dia.tiempoRegistradoTotal }}</td>&ndash;&gt;-->
-              <!--&lt;!&ndash;<td>{{ dia.tiempoRegistradoManyana }}</td>&ndash;&gt;-->
-              <!--&lt;!&ndash;<td>{{ dia.tiempoRegistradoTarde }}</td>&ndash;&gt;-->
-              <!--&lt;!&ndash;<td>{{ dia.tiempoRegistradoNoche }}</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-            <!--&lt;!&ndash;<td>{{ item.timeOutside }}</td>&ndash;&gt;-->
-            <!--&lt;!&ndash;<td>{{ item.timeInside }}</td>&ndash;&gt;-->
-          <!--</tr>-->
-        <!--</table>-->
-
-      <!--</div>-->
     </div>
   </div>
 </div>

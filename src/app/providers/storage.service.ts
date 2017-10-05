@@ -3,6 +3,7 @@ import * as firebase from 'firebase';
 import { Http } from '@angular/http';
 import { AuthService } from '../providers/auth.service';
 import 'rxjs/Rx';
+import {Subject} from "rxjs/Subject";
 
 @Injectable()
 export class StorageService {
@@ -10,6 +11,7 @@ export class StorageService {
   storageRef = this.storage.ref('demo-data.json');
   public url: string;
   public urlTest: string;
+  public subjectURL: Subject<string> = new Subject();
 
   constructor(private http: Http, public authService: AuthService) {
 
@@ -20,9 +22,8 @@ export class StorageService {
           // this.urlTest = 'https://metrics-api.geotecuji.org/api/v1/metrics-data/app-36437104577c4432/calculateMetrics?application=app-36437104577c4432&session=test_session&user=admin';
           this.storageRef.getDownloadURL().then(
             (url_2) => {
-              console.log('URL_2: ' + url_2);
               this.url = url_2;
-              console.log('URL: ' + this.url);
+              this.subjectURL.next(this.url);
             });
         }
       });
