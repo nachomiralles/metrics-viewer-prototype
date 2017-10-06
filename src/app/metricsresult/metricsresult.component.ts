@@ -19,8 +19,8 @@ export class MetricsResultComponent implements OnInit {
 
 
   prepareData(allData) {
-    this.structuredData = DataFormatterUtil.createMetricData(allData);
+    const parsedData = JSON.parse(allData.result.results[0].value)
+    this.structuredData = DataFormatterUtil.createMetricData(parsedData);
     this.dataReceived = true;
-    console.log(this.structuredData.length);
   }
 }

@@ -3,7 +3,8 @@
     <div class="jumbotron">
       <h1>Bienvenido</h1>
       <p>Has accedido al visor de métricas:</p>
-      <p><button class="btn btn-default" (click)="viewData()" *ngIf="urlReceived">Ver Datos</button></p>
+      <p><button class="btn btn-default" (click)="viewData()">Ver Datos</button></p>
+      <div *ngIf="loading" class="loader"></div>
       <app-metricsresult></app-metricsresult>
 
     </div>

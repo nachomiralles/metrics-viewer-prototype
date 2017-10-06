@@ -13,13 +13,13 @@ export class MembersComponent implements OnInit {
   @ViewChild(MetricsResultComponent) metricsResultComponent: MetricsResultComponent;
   metricsData;
   loading= false;
-  urlReceived = false;
+  // urlReceived = false;
 
   constructor(public storageService: StorageService) {
-    this.storageService.subjectURL.subscribe(
-      (url) => {
-        this.urlReceived = true;
-      });
+    // this.storageService.subjectURL.subscribe(
+    //   (url) => {
+    //     this.urlReceived = true;
+    //   });
   }
 
   ngOnInit() {
