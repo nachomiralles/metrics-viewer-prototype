@@ -1,4 +1,5 @@
 <div *ngIf="dataReceived" >
+  <p><button class="btn btn-default" (click)="getCSV()">Obtener CSV</button></p>
   <div *ngFor= "let user of structuredData">
       USUARIO: {{ user.user }}
       DIAS REGISTRADOS: {{ user.diasTotalesRegistrados }}

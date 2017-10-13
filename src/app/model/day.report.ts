@@ -21,4 +21,8 @@ export class DayReport {
   vecesFueraManyana: number;
   vecesFueraTarde: number;
   vecesFueraNoche: number;
+
+  // public toString = () : string => {
+  //   return fecha +
+  // }
 }

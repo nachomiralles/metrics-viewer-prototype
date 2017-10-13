@@ -5,26 +5,27 @@ import * as moment from 'moment';
 const days = {
   1: 'Lunes',
   2: 'Martes',
-  3: 'Miércoles',
+  3: 'Miercoles',
   4: 'Jueves',
   5: 'Viernes',
-  6: 'Sábado',
+  6: 'Sabado',
   0: 'Domingo'
-}
+};
+
 export class DataFormatterUtil {
   public static createMetricData(allData): UserReport[] {
     const structuredData: UserReport[] = [];
 
     // COSA MALIGNA, ESTOY MODIFICANDO LOS DATOS PARA QUE LAS FECHAS SEAN COMPARABLES
-    _.each(allData, function(line){
+    _.each(allData, function (line) {
       line['max_time'] = moment(line['max_time']).startOf('day').format('LLLL');
     });
 
     // EXTRAIGO NOMBRES DE USUARIO ÚNICOS
-    const distinctUserNames =  _.uniq(_.pluck(allData, 'user'));
+    const distinctUserNames = _.uniq(_.pluck(allData, 'user'));
     // const that = this;
     // PARA CADA NOMBRE DE USUARIO CREO UNA LISTA DE DATOS
-    _.each(distinctUserNames, function(name) {
+    _.each(distinctUserNames, function (name) {
 
       const newUser: UserReport = new UserReport();
       newUser.user = name;
@@ -34,10 +35,10 @@ export class DataFormatterUtil {
       });
 
       // EXTRAIGO FECHAS DISTINTAS
-      const distinctDates =  _.uniq(_.pluck(userData, 'max_time'));
+      const distinctDates = _.uniq(_.pluck(userData, 'max_time'));
       newUser.diasTotalesRegistrados = distinctDates.length;
       // PARA CADA FECHA CREO UNA LISTA DE DATOS
-      _.each(distinctDates, function(date) {
+      _.each(distinctDates, function (date) {
         const newDay: DayReport = new DayReport();
         newDay.fecha = moment(date).format('DD/MM/YYYY');
         newDay.diaSemana = days[moment(date).day()];
@@ -67,7 +68,7 @@ export class DataFormatterUtil {
         let numberOfTimesOutsideAfternoon = 0;
         let numberOfTimesOutsideNight = 0;
 
-        _.each(dateData, function(line){
+        _.each(dateData, function (line) {
           totalTime += line['timeInside'] + line['timeOutside'];
           totalTimeInside += line['timeInside'];
           totalTimeOutside += line['timeOutside'];
@@ -95,17 +96,17 @@ export class DataFormatterUtil {
           }
         });
 
-        newDay.tiempoRegistradoTotal = _toMinutes( totalTime );
-        newDay.tiempoCasaTotal = _toMinutes( totalTimeInside );
-        newDay.tiempoFueraTotal = _toMinutes( totalTimeOutside );
-        newDay.tiempoCasaManyana = _toMinutes( timeInsideMorning );
-        newDay.tiempoCasaTarde = _toMinutes( timeInsideAfternoon );
-        newDay.tiempoCasaNoche = _toMinutes( timeInsideNight );
-        newDay.tiempoFueraManyana = _toMinutes( timeOutsideMorning );
-        newDay.tiempoFueraTarde = _toMinutes( timeOutsideAfternoon );
-        newDay.tiempoFueraNoche = _toMinutes( timeOutsideNight );
-        newDay.tiempoRegistradoManyana = _toMinutes( totalTimeMorning );
-        newDay.tiempoRegistradoTarde = _toMinutes( totalTimeAfternoon );
+        newDay.tiempoRegistradoTotal = _toMinutes(totalTime);
+        newDay.tiempoCasaTotal = _toMinutes(totalTimeInside);
+        newDay.tiempoFueraTotal = _toMinutes(totalTimeOutside);
+        newDay.tiempoCasaManyana = _toMinutes(timeInsideMorning);
+        newDay.tiempoCasaTarde = _toMinutes(timeInsideAfternoon);
+        newDay.tiempoCasaNoche = _toMinutes(timeInsideNight);
+        newDay.tiempoFueraManyana = _toMinutes(timeOutsideMorning);
+        newDay.tiempoFueraTarde = _toMinutes(timeOutsideAfternoon);
+        newDay.tiempoFueraNoche = _toMinutes(timeOutsideNight);
+        newDay.tiempoRegistradoManyana = _toMinutes(totalTimeMorning);
+        newDay.tiempoRegistradoTarde = _toMinutes(totalTimeAfternoon);
         newDay.tiempoRegistradoNoche = _toMinutes(totalTimeNight);
 
         newDay.vecesCasaTotal = totalNumberOfTimesInside;
@@ -132,7 +133,86 @@ export class DataFormatterUtil {
     return structuredData;
   }
 
-  // _toMinutes(seconds: number): number {
-  //   return Math.trunc(seconds / 60);
-  // }
+
+  public static exportToCSV(userDataObject: UserReport[]) {
+    const arrayToreturn = [];
+    const header = [];
+    header.push('ID');
+    header.push('DiaTotalRegistro');
+
+    function getMaximum(data: UserReport[]): number {
+      let candidate = 0;
+      _.each(data, function (user) {
+        if (user.informeDiario.length > candidate) {
+          candidate = user.informeDiario.length;
+        }
+
+      });
+      return candidate;
+    }
+    const max = getMaximum(userDataObject);
+
+
+    for (let i = 1; i <= max; i++) {
+      console.log(i);
+      header.push('Fecha' + i.toString());
+      header.push('Dsemanafecha' + i.toString());
+      header.push('Tiempo_registrado' + i.toString());
+      header.push('Horas_manyana' + i.toString());
+      header.push('Horas_tarde' + i.toString());
+      header.push('Horas_noche' + i.toString());
+      header.push('Tiempo_casa_in' + i.toString());
+      header.push('Tiempo_casa_out' + i.toString());
+      header.push('Tiempo_out_manyana' + i.toString());
+      header.push('Tiempo_out_tarde' + i.toString());
+      header.push('Tiempo_out_noche' + i.toString());
+      header.push('num_veces_out' + i.toString());
+      header.push('num_veces_out_manyana' + i.toString());
+      header.push('num_veces_out_tarde' + i.toString());
+      header.push('num_veces_out_noche' + i.toString());
+    }
+    arrayToreturn.push(header);
+
+
+    _.each(userDataObject, function (user) {
+      const newLine = [];
+      newLine.push(user.user);
+      newLine.push(user.diasTotalesRegistrados.toString());
+      // let i = = 1 ;
+      _.each(user.informeDiario, function (day) {
+        newLine.push(day.fecha);
+        newLine.push(day.diaSemana);
+        newLine.push(day.tiempoRegistradoTotal);
+        newLine.push(day.tiempoRegistradoManyana);
+        newLine.push(day.tiempoRegistradoTarde);
+        newLine.push(day.tiempoRegistradoNoche);
+        newLine.push(day.tiempoCasaTotal);
+        newLine.push(day.tiempoFueraTotal);
+        newLine.push(day.tiempoFueraManyana);
+        newLine.push(day.tiempoFueraTarde);
+        newLine.push(day.tiempoFueraNoche);
+        newLine.push(day.vecesFueraTotal);
+        newLine.push(day.vecesFueraManyana);
+        newLine.push(day.vecesFueraTarde);
+        newLine.push(day.vecesFueraNoche);
+        // newLine.push(day.vecesFueraTotal);
+      });
+      arrayToreturn.push(newLine);
+    });
+
+
+    function createCSV(d): string {
+      let csvContent = 'data:text/csv;charset=utf-8,';
+      // let csvContent = '';
+      d.forEach(function (infoArray, index) {
+
+        const dataString = infoArray.join(';');
+        csvContent += index < d.length ? dataString + '\n' : dataString;
+
+      });
+      return csvContent;
+    }
+
+    return createCSV(arrayToreturn);
+  }
 }
